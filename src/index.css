@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media screen and (min-width: 550px) {
+    body {
+      background: black;
+      padding: 10px; /* Larger font size for tablets and up */
+      padding-left: 35%;
+    }
+  }
