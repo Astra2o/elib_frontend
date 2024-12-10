@@ -8,6 +8,9 @@ import UserSignup from './pages/Users/UserSignup'
 import UserLogin from './pages/Users/UserLogin'
 import CaptainSignup from './pages/Captain/CaptainSignup'
 import CaptainLogin from './pages/Captain/CaptainLogin'
+import UserProtectedWrapper from './pages/Users/UserProtectedWrapper'
+import UserHome from './Components/UserHome'
+import UserLogout from './pages/Users/UserLogout'
 
 function App() {
   
@@ -23,6 +26,16 @@ function App() {
         <Route path='/login' element={ <UserLogin/> } />
         <Route path='/captain-signup' element={ <CaptainSignup/> } />
         <Route path='/captain-login' element={ <CaptainLogin/> } />
+        <Route  path='/user' element={
+            <UserProtectedWrapper>
+                <UserHome/>
+            </UserProtectedWrapper>
+        } />
+        <Route  path='/user/logout' element={
+            <UserProtectedWrapper>
+                <UserLogout/>
+            </UserProtectedWrapper>
+        } />
       </Routes>
       </div>
     </div>

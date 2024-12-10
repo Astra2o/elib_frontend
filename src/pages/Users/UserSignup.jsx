@@ -1,7 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useState, useRef, useEffect, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserDataContext } from '../../context/UserContext';
+import { conf } from '../../config/conf';
 
 const UserSignup = () => {
+//    const userData= useContext(UserDataContext)
+ const {user,setuser}=useContext(UserDataContext);
+ const navigate = useNavigate()
+    
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [firstname, setfirstname] = useState('');
@@ -26,7 +33,7 @@ const UserSignup = () => {
     firstnameRef.current.focus();
   }, []);
 
-  const registerUserSubmit = (e) => {
+  const registerUserSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
 
@@ -53,9 +60,23 @@ const UserSignup = () => {
 
     // Set Errors or Submit Form
     setValidationErrors(errors);
+
     if (Object.keys(errors).length === 0) {
       console.log({ firstname, lastname, email, password, confirmpassword });
-      alert('Form submitted successfully!');
+      const response = await axios.post(`${conf.port}/api/users/register`,{ firstname, lastname, email, password })
+      if(response.status === 201){
+        const data = response.data
+        setuser(data.user)
+        localStorage.setItem('access-token',data.token);
+        localStorage.setItem('user-type','user')
+
+        // localStorage.getItem('access-token'));
+        
+        // console.log(user);
+        navigate('/')
+        
+      }
+    //   alert('Form submitted successfully!');
     }
   };
 
