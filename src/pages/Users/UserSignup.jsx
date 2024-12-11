@@ -8,7 +8,14 @@ const UserSignup = () => {
 //    const userData= useContext(UserDataContext)
  const {user,setuser}=useContext(UserDataContext);
  const navigate = useNavigate()
-    
+ const token = localStorage.getItem('access-token')
+
+ useEffect(() => {
+   if(token){
+       navigate('/')
+   }
+     
+ }, [])
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [firstname, setfirstname] = useState('');

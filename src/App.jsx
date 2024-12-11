@@ -11,6 +11,9 @@ import CaptainLogin from './pages/Captain/CaptainLogin'
 import UserProtectedWrapper from './pages/Users/UserProtectedWrapper'
 import UserHome from './Components/UserHome'
 import UserLogout from './pages/Users/UserLogout'
+import CaptainProtectedWrapper from './pages/Captain/CaptainProtectedWrapper'
+import CaptainHome from './pages/Captain/CaptainHome'
+import CaptainLogout from './pages/Captain/CaptainLogout'
 
 function App() {
   
@@ -35,6 +38,17 @@ function App() {
             <UserProtectedWrapper>
                 <UserLogout/>
             </UserProtectedWrapper>
+        } />
+
+        <Route  path='/captain' element={
+          <CaptainProtectedWrapper>
+              <CaptainHome/>
+          </CaptainProtectedWrapper>
+        } />
+        <Route  path='/captain/logout' element={
+          <CaptainProtectedWrapper>
+              <CaptainLogout/>
+          </CaptainProtectedWrapper>
         } />
       </Routes>
       </div>

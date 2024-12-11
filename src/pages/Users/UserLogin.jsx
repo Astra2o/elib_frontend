@@ -9,6 +9,14 @@ const UserSignup = () => {
     const navigate = useNavigate()
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('')
+    const token = localStorage.getItem('access-token')
+
+  useEffect(() => {
+    if(token){
+        navigate('/')
+    }
+      
+  }, [])
     const loginSubmit= async(e)=>{
         e.preventDefault()
         

@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import StepOne from './component_signup/StepOne';
 import StepTwo from './component_signup/StepTwo';
+import axios from 'axios';
+import { conf } from '../../config/conf';
+import { CaptainDataContext } from '../../context/CaptainContext';
+import { useNavigate } from 'react-router-dom';
 const CaptainSignup = () => {
+  const navigate=useNavigate()
+  const {captain,setCaptain}=useContext(CaptainDataContext)
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstname: '',
@@ -14,6 +20,14 @@ const CaptainSignup = () => {
     vehicleCapacity: '',
     vehicleType: '',
   });
+  const token = localStorage.getItem('access-token')
+
+  useEffect(() => {
+    if(token){
+        navigate('/')
+    }
+      
+  }, [])
 
   const handleNext = (data) => {
     setFormData({ ...formData, ...data });
@@ -27,7 +41,30 @@ const CaptainSignup = () => {
   const handleRegister = (data) => {
     setFormData({ ...formData, ...data });
     console.log('Registration Data:', { ...formData, ...data });
-    alert('Registration successful!');
+    // alert('Registration successful!');
+    console.log(formData);
+
+    const registerpost= async()=>{
+      const response = await axios.post(`${conf.port}/api/captain/register`,{  ...formData, ...data})
+      if(response.status === 201){
+        const data = response.data;
+        console.log(data.captain);
+        
+        setCaptain(data.captain)
+        localStorage.setItem('access-token',data.token);
+        localStorage.setItem('user-type','captain')
+
+        localStorage.getItem('access-token');
+        
+        // console.log(user);
+        navigate('/')
+        
+      }
+    }
+
+    registerpost()
+    
+
   };
 
   return (

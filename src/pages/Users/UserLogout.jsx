@@ -17,6 +17,8 @@ const UserLogout = () => {
                 });
                 if (response.status==200) {
                     localStorage.removeItem('access-token')
+                    localStorage.removeItem('user')
+                    localStorage.removeItem('user-type')
                     navigate('/login')
                 }
                 // setuser(null); // Update the user state

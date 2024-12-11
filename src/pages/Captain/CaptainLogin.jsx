@@ -1,16 +1,44 @@
-import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import {useContext, useEffect, useState} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { conf } from '../../config/conf';
+import { CaptainDataContext } from '../../context/CaptainContext';
 const CaptainLogin = () => {
+    const navigate=useNavigate()
+    const {captain,setCaptain}=useContext(CaptainDataContext)
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('')
-    const loginSubmit=(e)=>{
+    const token = localStorage.getItem('access-token')
+     useEffect(() => {
+       if(token){
+           navigate('/')
+       }
+         
+     }, [])
+     
+
+    const loginSubmit=async(e)=>{
         e.preventDefault()
         
-        console.log({email,password});
+        // console.log({email,password});
+         
+        const response = await axios.post(`${conf.port}/api/captain/login`,{  email, password })
+        if(response.status === 201){
+          const data = response.data
+        //   console.log(data.captain);
+        
+          setCaptain(data.captain)
+          localStorage.setItem('access-token',data.token);
+          localStorage.setItem('user-type','captain')
+  
+        //   localStorage.getItem('access-token');
+          // console.log(user);
+          navigate('/')
 
         setemail('')
-        setpassword('')
+        setpassword('')}
     }
+
   return (
     <div className='p-7 flex flex-col justify-between h-full min-h-screen w-full'>
     <div>
@@ -35,6 +63,6 @@ const CaptainLogin = () => {
         <Link to='/login' className='bg-[#10b461] flex justify-center text-white font-semibold  rounded-lg w-full text-lg  px-5 py-3 mt-6'>Login as an User</Link>
     </div>
 </div>  )
-}
 
+}
 export default CaptainLogin
