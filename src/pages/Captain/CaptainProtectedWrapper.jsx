@@ -30,6 +30,9 @@ const CaptainProtectedWrapper = ({ children }) => {
           console.log('Fetched User:', captainData);
         } catch (error) {
           console.error('Error fetching user:', error);
+          localStorage.removeItem('access-token')
+          localStorage.removeItem('user-type')
+
           navigate('/login'); // Redirect to login on failure
         }
       } else {

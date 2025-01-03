@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const ConfirmRide = (props) => {
+
+    const [lookingForDriver, setlookingForDriver] = useState(false)
+    
+    const confirmRide=()=>{
+        setlookingForDriver(true)
+        console.log(true);
+        
+    }
+
   return (
     <>
           
@@ -8,7 +17,10 @@ const ConfirmRide = (props) => {
 
 
             <div className=" flex capitalize  px-3 flex-col ">
-                <div className='text-2xl mb-5 font-semibold'>Confirm your ride</div>
+                {lookingForDriver? <div className='text-2xl mb-5 font-semibold'>looking for driver</div> : <div className='text-2xl mb-5 font-semibold'>Confirm your ride</div>
+
+}
+                {/* <div className='text-2xl mb-5 font-semibold'>Confirm your ride</div> */}
                 <div className='flex justify-center '>
                     <img className=' w-60' src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_258,w_458/v1631125074/assets/a5/65af2c-aa9a-48c7-a0de-af4037095837/original/uber-moto.png " alt="" />
                 </div>
@@ -36,9 +48,10 @@ const ConfirmRide = (props) => {
                 </div>
 
             </div>
-              <button className=' w-full text-white text-xl font-semibold bg-green-600 py-2 rounded-lg mt-20'>
+            {!lookingForDriver? <button onClick={()=>{confirmRide()}} className=' w-full text-white text-xl font-semibold bg-green-600 py-2 rounded-lg mt-20'>
                          Confirm Ride
-              </button>
+              </button>:<div className=' text-center text-xl py-2 mt-20'>Please Wait ...</div>}
+              
     </>
   )
 }
